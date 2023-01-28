@@ -54,7 +54,7 @@ public class UserAuthentication extends AppCompatActivity {
                 else
                 {
                     progressBar.setVisibility(View.VISIBLE);
-                    //verifying the otp entered and otp received are same or not
+                    //verifying the otp entered and otp received are same or not (only by firebaseAuth method )
                     PhoneAuthCredential credential= PhoneAuthProvider.getCredential(otp_received, otp_entered);
                     signInWithPhoneAuthCredential(credential);
                 }

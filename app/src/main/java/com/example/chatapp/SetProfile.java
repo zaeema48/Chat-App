@@ -41,7 +41,7 @@ public class SetProfile extends AppCompatActivity {
 
         profile=findViewById(R.id.user_profile);
         user_name=findViewById(R.id.getUserName);
-        progressBar=findViewById(R.id.progressBar);
+        progressBar=findViewById(R.id.progressbarofCreateProfile);
         save_profile=findViewById(R.id.saveProfile);
 
         profile.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class SetProfile extends AppCompatActivity {
 
         //storing the user details in firebase storage and database
         save_profile.setOnClickListener(new View.OnClickListener() {
-            String user_id, username, phone_no, image_link;
+            String user_id, username, phone_no, image_link; //firebase generates user id to get the details of user
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);

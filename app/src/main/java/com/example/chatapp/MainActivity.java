@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.storage.FirebaseStorage;
 import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
@@ -103,16 +104,17 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-//    //Method to check whether the user is already log in
-//    @Override
-//    protected void onStart(){
-//        super.onStart();
-//        if(FirebaseAuth.getInstance()!=null){
-//            Intent intent= new Intent(MainActivity.this, HomeActivity.class);
-//            startActivity(intent);
-//
-//        }
-//    }
+    //Method to check whether the user is already log in
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(FirebaseAuth.getInstance()!=null){
+            Intent intent= new Intent(MainActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+        }
+    }
 
 
 }
