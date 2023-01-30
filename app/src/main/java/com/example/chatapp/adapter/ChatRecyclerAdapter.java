@@ -1,6 +1,7 @@
 package com.example.chatapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.chatapp.MessageActivity;
 import com.example.chatapp.Model.User;
 import com.example.chatapp.R;
 
@@ -51,12 +54,25 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        User user= users.get(position);
+        holder.name.setText(user.getUser_name());
+        Glide.with(context).load(user.getImage_link()).placeholder(R.drawable.profile).into(holder.contact_dp);
 
+        holder.chatContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MessageActivity.class);
+                intent.putExtra("receiver",user.getUser_name() );
+                intent.putExtra("receiver_id", user.getUser_id());
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return ;
+        return users.size();
     }
 
 }

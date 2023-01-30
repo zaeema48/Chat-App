@@ -46,7 +46,7 @@ public class UserAuthentication extends AppCompatActivity {
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = getIntent();
+                Intent intent = getIntent(); //make an object of intent to get the otp from MainActivity
                 String otp_received= intent.getStringExtra("otp");
                 String otp_entered= otp.getText().toString();   //otp entering is of type View, here we are converting that view into string type
                 if(otp_entered.isEmpty())

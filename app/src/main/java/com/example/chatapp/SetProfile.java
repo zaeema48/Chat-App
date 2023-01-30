@@ -60,12 +60,11 @@ public class SetProfile extends AppCompatActivity {
          firebaseStorage= FirebaseStorage.getInstance();
          firebaseDatabase= FirebaseDatabase.getInstance();
 
-        //storing the user details in firebase storage and database
+       //fetching entered username and user profile photo
         save_profile.setOnClickListener(new View.OnClickListener() {
-            String user_id, username, phone_no, image_link; //firebase generates user id to get the details of user
+            String username, image_link;
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
                 username = user_name.getText().toString();
                 if (username.isEmpty()) {
                     Toast.makeText(SetProfile.this, "Enter Your Name!!", Toast.LENGTH_SHORT).show();
@@ -82,6 +81,8 @@ public class SetProfile extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         image_link=uri.toString();
+//                                        Toast.makeText(SetProfile.this, ""+image_link, Toast.LENGTH_SHORT).show();
+                                        createProfile(username, image_link);
                                     }
                                 });
                             }
@@ -90,30 +91,36 @@ public class SetProfile extends AppCompatActivity {
                 }
                 else{
                     image_link= "NO IMAGE";
+                    createProfile(username, image_link);
                 }
-
-                user_id= firebaseAuth.getUid();
-                phone_no=firebaseAuth.getCurrentUser().getPhoneNumber();
-                User user = new User(user_id, phone_no, username, image_link);
-
-                firebaseDatabase.getReference()
-                        .child("users")     //child is the folder in firebase
-                        .child(user_id)
-                        .setValue(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                progressBar.setVisibility(View.INVISIBLE);
-                                Intent intent= new Intent(SetProfile.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-
             }
         });
 
     }
+    //storing the user details in firebase storage and database
+    private void createProfile(String username, String image_link){
+        String user_id, phone_no;
+        user_id= firebaseAuth.getUid(); //firebase generates user id to get the details of user
+        phone_no=firebaseAuth.getCurrentUser().getPhoneNumber();
+        User user = new User(user_id, phone_no, username, image_link);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        firebaseDatabase.getReference()
+                .child("users")     //child is the folder in firebase
+                .child(user_id)
+                .setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Intent intent= new Intent(SetProfile.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+    }
+
 
     //we need to override onActivityResult method to set the dp in the profile
     @Override

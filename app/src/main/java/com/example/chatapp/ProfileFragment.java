@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -30,17 +31,23 @@ TextView username;
 android.widget.Button logout, updateProfile;
 
 FirebaseAuth firebaseAuth;
+FirebaseStorage firebaseStorage;
+FirebaseDatabase firebaseDatabase;
 
+    @Nullable //gives the variable to hold null value
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-        View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        View view= inflater.inflate(R.layout.fragment_profile, null);
         profile=view.findViewById(R.id.getUserImageinImageView);
         username=view.findViewById(R.id.getUserName);
         logout=view.findViewById(R.id.logout);
         updateProfile=view.findViewById(R.id.profileUpd);
+
+
         firebaseAuth= FirebaseAuth.getInstance();
+        firebaseDatabase= FirebaseDatabase.getInstance();
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +69,9 @@ FirebaseAuth firebaseAuth;
         });
         String user_id= firebaseAuth.getUid();  //storing user id of the current user to avoid making firebase instances again and again
 
+//        firebaseStorage= FirebaseStorage.getInstance();
 //       fetching the profile from firebase storage
-        FirebaseStorage firebaseStorage=FirebaseStorage.getInstance();
-        //getting the location of the profile image from firebaseStorage
+//        getting the location of the profile image from firebaseStorage
 //        firebaseStorage.getReference().child("Profile").child(user_id)
 //                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //                    @Override
@@ -81,6 +88,7 @@ FirebaseAuth firebaseAuth;
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User user= snapshot.getValue(User.class) ;
                         username.setText(user.getUser_name());
+                        Glide.with(getContext()).load(user.getImage_link()).placeholder(R.drawable.profile).into(profile);
                     }
 
                     @Override
