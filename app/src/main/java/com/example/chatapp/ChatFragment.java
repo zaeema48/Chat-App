@@ -41,6 +41,7 @@ public class ChatFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) { //snapshot of a user in which all data items {user id, username, image link...} are present
+                        Users.clear();
                         for(DataSnapshot snapshot1 : snapshot.getChildren()) {
                             User user = snapshot1.getValue(User.class);
                             if(!user.getUser_id().equals(FirebaseAuth.getInstance().getUid()))

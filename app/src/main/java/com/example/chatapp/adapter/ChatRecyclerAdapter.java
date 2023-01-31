@@ -18,8 +18,15 @@ import com.bumptech.glide.Glide;
 import com.example.chatapp.MessageActivity;
 import com.example.chatapp.Model.User;
 import com.example.chatapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
 
@@ -51,7 +58,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
         View view= LayoutInflater.from(context).inflate(R.layout.chats, null, false);
         return new ViewHolder(view);
     }
-
+    String senderRoom;
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user= users.get(position);
@@ -65,6 +72,29 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
                 intent.putExtra("receiver",user.getUser_name() );
                 intent.putExtra("receiver_id", user.getUser_id());
                 context.startActivity(intent);
+
+            }
+        });
+    senderRoom= FirebaseAuth.getInstance().getUid() + user.getUser_id();
+        //fetching the last message and last message time
+        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
+        firebaseDatabase.getReference().child("chats")
+                .child(senderRoom).child("last_message")
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String last_msg= snapshot.child("message").getValue(String.class);
+                    long time = snapshot.child("time").getValue(Long.class);
+                    holder.last_msg.setText(last_msg);
+                    SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
+                    holder.msg_time.setText(dateFormat.format(new Date(time)));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

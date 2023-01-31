@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/ic_circle_green.xml" value="0.2115" />
+        <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/receive_drawable.xml" value="0.1925" />
+        <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/sent_drawable.xml" value="0.2115" />
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_message.xml" value="0.22" />
@@ -13,6 +15,8 @@
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/chats.xml" value="0.203125" />
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/fragment_chat.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/receiver.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zaeema/AndroidStudioProjects/ChatApp/app/src/main/res/layout/sender.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

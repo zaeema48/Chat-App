@@ -62,7 +62,7 @@ FirebaseDatabase firebaseDatabase;
         updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SetProfile.class);
+                Intent intent = new Intent(getContext(), SetProfile.class); // we are passing getcontext method to get the context in the parameters of Intent because ProfileFragment is a fragment and not an activit
                 startActivity(intent);
                 getActivity().finish();
             }
