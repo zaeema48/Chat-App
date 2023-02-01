@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class HomeActivity extends AppCompatActivity {
 TabLayout tabLayout;
-TabItem profile, chats, status;
+TabItem profile, chats;
 ViewPager viewPager;
 
     @Override
@@ -23,17 +23,16 @@ ViewPager viewPager;
         tabLayout= findViewById(R.id.tabLayout);
         profile=findViewById(R.id.profile);
         chats=findViewById(R.id.chats);
-        status=findViewById(R.id.status);
         viewPager=findViewById(R.id.fragment_container);
 
-        PagerAdapter pagerAdapter= new com.example.chatapp.adapter.PagerAdapter(getSupportFragmentManager(), 3);
+        PagerAdapter pagerAdapter= new com.example.chatapp.adapter.PagerAdapter(getSupportFragmentManager(), 2);
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition()==0||tab.getPosition()==1||tab.getPosition()==2)
+                if(tab.getPosition()==0||tab.getPosition()==1)
                     pagerAdapter.notifyDataSetChanged();
             }
 

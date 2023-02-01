@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -71,10 +72,11 @@ public class MessageActivity extends AppCompatActivity {
                     //sending the msg to firebasedatabase
                     firebaseDatabase.getReference().child("chats")
                             .child(sender_room).child("messages").push() //push is creating a unique folder to hold each and every msg separately
-                            .setValue(message)
+                            .setValue(message)  //storing msg in sender's room
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+                                    //storing msg in receiver's room
                                     firebaseDatabase.getReference().child("chats")
                                             .child(receiver_room).child("messages")
                                             .push().setValue(message);
@@ -82,16 +84,13 @@ public class MessageActivity extends AppCompatActivity {
                             });
 
                     //to set/update the last msgs of chats
-                    firebaseDatabase.getReference().child("chats").child(sender_room)
-                                    .child("last_msg").setValue(message) //value is passed without " "
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            firebaseDatabase.getReference().child("chats")
-                                                    .child(receiver_room).child("last_msg")
-                                                    .setValue(message);
-                                        }
-                                    });
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("last_msg", message.getMessage());
+                    map.put("time", message.getTime());
+                    firebaseDatabase.getReference().child("chats")
+                                    .child(sender_room).updateChildren(map);
+                    firebaseDatabase.getReference().child("chats")
+                                    .child(receiver_room).updateChildren(map);
 
 
                     msg_box.setText("");
@@ -109,7 +108,7 @@ public class MessageActivity extends AppCompatActivity {
                 .child("messages").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        messages.clear();
+                        messages.clear(); //to avoid repetion of msgs that are already appeared
                         for(DataSnapshot snapshot1 : snapshot.getChildren()){
                             Message message= snapshot1.getValue(Message.class); //typeCasting
                             messages.add(message); //adding the msgs in the arraylist(datasource) to pass in the adapter

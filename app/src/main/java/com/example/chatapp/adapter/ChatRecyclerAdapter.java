@@ -78,26 +78,25 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
     senderRoom= FirebaseAuth.getInstance().getUid() + user.getUser_id();
         //fetching the last message and last message time
         FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
-        firebaseDatabase.getReference().child("chats")
-                .child(senderRoom).child("last_message")
+        firebaseDatabase.getReference().child("chats").child(senderRoom)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String last_msg= snapshot.child("message").getValue(String.class);
-                    long time = snapshot.child("time").getValue(Long.class);
-                    holder.last_msg.setText(last_msg);
-                    SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
-                    holder.msg_time.setText(dateFormat.format(new Date(time)));
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()) {
+                            String msg = snapshot.child("last_msg").getValue(String.class);
+                            long time = snapshot.child("time").getValue(Long.class);
+                            holder.last_msg.setText(msg);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                            holder.msg_time.setText(dateFormat.format(new Date(time)));
+                        }
+                    }
 
-                }
-            }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
 
-            }
-        });
     }
 
     @Override

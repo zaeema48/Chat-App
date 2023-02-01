@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.chatapp.ChatFragment;
 import com.example.chatapp.ProfileFragment;
-import com.example.chatapp.StatusFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
@@ -25,9 +24,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new ChatFragment();
 
             case 1:
-                return new StatusFragment();
-
-            case 2:
                 return new ProfileFragment();
 
             default:
